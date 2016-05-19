@@ -15,7 +15,7 @@ gulp.task('server', function() {
         port: 8080,
         livereload: true,
         middleware: function(connect, opt) {
-            return [ historyApiFallback ];
+            return [ historyApiFallback() ];
         }
     });
 });
