@@ -44,8 +44,21 @@ gulp.task('html', function() {
 gulp.task('watch', function() {
     gulp.watch(['./app/**/*.html'], ['html']);
     gulp.watch(['./app/stylesheets/**/*.styl'], ['css']);
+    gulp.watch(['./app/scripts/**/*.js'], ['jshint']);
+});
+
+var jshint = require('gulp-jshint'),
+    stylish = require('jshint-stylish');
+
+// Busca errores en el JS y nos los muestra por pantalla
+gulp.task('jshint', function() {
+    return gulp.src('./app/scripts/**/*.js') // Busca los archivos que coincidan con la regex
+        .pipe(jshint('.jshintrc')) // Se enlaza con las configs establcidas en el fichero .jshintrc
+        .pipe(jshint.reporter('jshint-stylish')) // Usa el plugin de jshint para mostrar de una mejor manera los mensajes por terminal
+        .pipe(jshint.reporter('fail')); // Seguiremos informando
 });
 
 // Tarea por defecto que a su vez lanza las tareas server y watch.
 gulp.task('default', ['server', 'watch']);
+
 
