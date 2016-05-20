@@ -20,7 +20,6 @@ gulp.task('server', function() {
     });
 });
 
-
 // CONFIGURACION PARA EL COMPILADO DE LOS ARCHIVOS .styl que generan los .css para la aplicacion
 var stylus = require('gulp-stylus'),
 nib = require('nib');
