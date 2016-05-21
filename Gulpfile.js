@@ -55,14 +55,13 @@ var wiredep = require('wiredep').stream;
 
 // Busca en las carpetas de estilos y javascript los archivos que hayamos creado
 // para inyectarlos en el index.html
-gulp.task('inject', function() {
-    var sources = gulp.src([ './app/scripts/**/*.js', './app/stylesheets/**/*.css' ]);
-    return gulp.src('index.html', { cwd: './app' })
-        .pipe(inject(sources, {
-            read: false,
-            ignorePath: '/app'
-        }))
-        .pipe(gulp.dest('./app'));
+gulp.task('inject', function () {
+  var target = gulp.src('./app/index.html');
+  // It's not necessary to read the files (will speed up things), we're only after their paths: 
+  var sources = gulp.src(['./app/**/*.js', './app/**/*.css'], {read: false});
+ 
+  return target.pipe(inject(sources))
+    .pipe(gulp.dest('./app'));
 });
 
 // Inyecta las librerias que instalemos vía Bower
