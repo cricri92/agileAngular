@@ -22,7 +22,7 @@ gulp.task('server', function() {
 
 // CONFIGURACION PARA EL COMPILADO DE LOS ARCHIVOS .styl que generan los .css para la aplicacion
 var stylus = require('gulp-stylus'),
-nib = require('nib');
+    nib = require('nib');
 
 // Pre-procesa archivos Stylus a CSS y recarga los cambios
 // Por ahora, esta tarea tomara el archivo 'main.styl' para procesarlo, y lo guardara en el destino:
@@ -56,20 +56,21 @@ var wiredep = require('wiredep').stream;
 // Busca en las carpetas de estilos y javascript los archivos que hayamos creado
 // para inyectarlos en el index.html
 gulp.task('inject', function () {
-  var target = gulp.src('./app/index.html');
-  // It's not necessary to read the files (will speed up things), we're only after their paths: 
-  var sources = gulp.src(['./app/**/*.js', './app/**/*.css'], {read: false});
+    var target = gulp.src('./app/index.html');
+    // It's not necessary to read the files (will speed up things), we're only after their paths: 
+    var sources = gulp.src(['./app/scripts/**/*.js', './app/stylesheets/**/*.css'], {read: false, relative: true});
  
-  return target.pipe(inject(sources))
-    .pipe(gulp.dest('./app'));
+    return target
+        .pipe(inject(sources, {ignorePath: '/app'}))
+        .pipe(gulp.dest('./app'));
 });
 
 // Inyecta las librerias que instalemos vía Bower
 gulp.task('wiredep', function () {
     gulp.src('./app/index.html')
         .pipe(wiredep({
-            directory: './app/lib'
-        }))
+            directory: './app/lib/'  
+        })) 
         .pipe(gulp.dest('./app'));
 });
 
