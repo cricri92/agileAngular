@@ -74,6 +74,20 @@ gulp.task('wiredep', function () {
         .pipe(gulp.dest('./app'));
 });
 
+gulp.task('server-dist', function() {
+    connect.server({
+        root: './dist',
+        hostname: '0.0.0.0',
+        port: 8000,
+        livereload: true,    
+        middleware: function(connect, opt) {
+            return [ historyApiFallback() ];
+        }
+    });
+});
+
+gulp.task('build', []);
+
 //END OF TASK DECLARATIONS
 
 // Vigila cambios que se produzcan en el código
