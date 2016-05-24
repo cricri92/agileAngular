@@ -19,7 +19,7 @@
     
     /** Factoria para los usuarios */
     function User ($resource, BaseUrl) {
-        return $resource(BaseUrl + '/users/userId', { userId: '@_id'});
+        return $resource(BaseUrl + '/users/:id', { id: '@_id'});
     }
     
     angular
